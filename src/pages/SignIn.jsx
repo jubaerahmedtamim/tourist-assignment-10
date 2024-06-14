@@ -8,7 +8,7 @@ import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
 
 const SignIn = () => {
-    const { loginWithEmail } = useContext(AuthContext);
+    const { loginWithEmail, googleSignIn, githubSignIn } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = (data) => {
@@ -37,6 +37,16 @@ const SignIn = () => {
                 });
             })
 
+    }
+
+    const handleSocialSignIn = (socialSignIn) => {
+        socialSignIn()
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -72,10 +82,10 @@ const SignIn = () => {
                 <div className="divider text-[#52b788]">Login with</div>
                 <div >
                     <div className='flex gap-4 justify-center mt-4'>
-                        <button className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
+                        <button onClick={() => { handleSocialSignIn(googleSignIn) }} className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
                             <FaGoogle></FaGoogle> Google
                         </button>
-                        <button className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
+                        <button onClick={() => handleSocialSignIn(githubSignIn)} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
                             <FaGithub></FaGithub> Github
                         </button>
                     </div>
