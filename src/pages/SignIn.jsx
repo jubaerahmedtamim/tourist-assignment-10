@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Lottie from "lottie-react";
 import loginAnimation from "../../public/RegisterAnimation.json";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../providers/AuthProvider';
@@ -9,11 +9,35 @@ import Swal from 'sweetalert2';
 
 const SignIn = () => {
     const { loginWithEmail, googleSignIn, githubSignIn } = useContext(AuthContext);
+    const location = useLocation()
+    console.log(location);
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = (data) => {
 
         const { email, password } = data;
+         // for password validation.
+         if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+            return (
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Password should contain at least one Uppercase, one lowercase & 6 characters in length.",
+                    showConfirmButton: false,
+                    timer: 1500
+                }))
+        }
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            return (
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Please provide a valid email address.",
+                    showConfirmButton: false,
+                    timer: 1500
+                }))
+        }
 
         loginWithEmail(email, password)
             .then(result => {
@@ -25,6 +49,7 @@ const SignIn = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
+                    navigate(location.state)
                 }
             })
             .catch(error => {
@@ -49,6 +74,7 @@ const SignIn = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                navigate(location.state)
             })
             .catch(error => {
                 console.log(error);

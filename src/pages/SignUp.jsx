@@ -32,6 +32,16 @@ const SignUp = () => {
                     timer: 1500
                 }))
         }
+        if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            return (
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Please provide a valid email address.",
+                    showConfirmButton: false,
+                    timer: 1500
+                }))
+        }
         createUser(email, password)
             .then(result => {
                 console.log(result);

@@ -14,7 +14,7 @@ const SwiperSlider = () => {
                 effect={'fade'}
                 slidesPerView={1}
                 autoplay={{
-                    delay: 3500,
+                    delay: 4000,
                     disableOnInteraction: false,
                 }}
                 navigation

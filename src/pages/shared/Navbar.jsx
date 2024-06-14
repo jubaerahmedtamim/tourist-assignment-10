@@ -1,12 +1,17 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import 'react-tooltip/dist/react-tooltip.css'
+import { Tooltip } from 'react-tooltip'
 
 const Navbar = () => {
     const { user, logOut, setUser, loading } = useContext(AuthContext);
     console.log(loading);
     const navLinks = <>
         <li> <NavLink to='/'>Home</NavLink> </li>
+        <li> <NavLink to='/allTouristSpot'>All Tourist Spot</NavLink> </li>
+        <li> <NavLink to='/addTouristSpot'>Add Tourist Spot</NavLink> </li>
+        <li> <NavLink to='/myList'>My List</NavLink> </li>
     </>
     // logout user
     const handleLogOut = () => {
@@ -34,20 +39,21 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                
+
                 <div>
                     {
                         user &&
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 rounded-full">
-                                    <img alt="Tailwind CSS Navbar component" src={user && user?.photoURL || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'} />
+                                <Tooltip id="my-tooltip" />
+                                <div data-tooltip-id="my-tooltip" data-tooltip-content={user ? user?.displayName : "No Name"} tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img alt="Tailwind CSS Navbar component" src={user && user?.photoURL || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'} />
+                                    </div>
                                 </div>
-                            </div>
-                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><a>{user && user?.displayName || "No Name"}</a></li>
-                                <li><button onClick={handleLogOut}>Logout</button ></li>
-                            </ul>
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><a>{user && user?.displayName || "No Name"}</a></li>
+                                    <li><button onClick={handleLogOut}>Logout</button ></li>
+                                </ul>
                         </div>
                         ||
                         <Link to="/login"> <button className="btn">login</button></Link>
