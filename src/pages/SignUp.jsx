@@ -1,18 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Lottie from "lottie-react";
 import loginAnimation from "../../public/RegisterAnimation.json";
 import { Link } from 'react-router-dom';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../providers/AuthProvider';
+import { updateProfile } from 'firebase/auth';
+import auth from '../firebase/firebase.config';
+import Swal from 'sweetalert2'
 
 
 
 
 const SignUp = () => {
+    const { createUser } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+
     const onSubmit = (data) => {
         console.log(data);
+        const { name, email, password, imageURL } = data;
+        createUser(email, password)
+            .then(result => {
+                console.log(result);
+                updateProfile(auth.currentUser, {
+                    displayName: name,
+                    photoURL: imageURL,
+                }).then(() => {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your registration successful.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: error.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
     }
     return (
         <div className='grid md:grid-cols-2 md:border md:border-l-0 gap-8 rounded-lg  px-2 lg:px-0  md:max-w-7xl mx-auto items-center'>
