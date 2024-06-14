@@ -91,7 +91,7 @@ const SignIn = () => {
                         <button onClick={() => { handleSocialSignIn(googleSignIn, "google") }} className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
                             <FaGoogle></FaGoogle> Google
                         </button>
-                        <button onClick={() => handleSocialSignIn(githubSignIn , "github")} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
+                        <button onClick={() => handleSocialSignIn(githubSignIn, "github")} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
                             <FaGithub></FaGithub> Github
                         </button>
                     </div>
