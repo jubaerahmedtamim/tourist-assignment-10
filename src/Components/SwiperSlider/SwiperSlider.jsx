@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigation, Pagination, Scrollbar, A11y, EffectFade, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-
 import slides from '../../../public/slider.json'
 
 const SwiperSlider = () => {
