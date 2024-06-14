@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 
+
+
+
 const SignUp = () => {
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data) => {
         console.log(data);
@@ -48,7 +52,7 @@ const SignUp = () => {
                     <div className='flex items-center gap-1 mt-2'>
                         <input {...register('check', { required: true })} type="checkbox" name="check" id="terms" />
                         <label className='text-sm' htmlFor="terms">I agree to the <span className='text-[#52b788]'><Link to='#'>Terms of Service</Link></span> and <span className='text-[#52b788]'> <Link to='#'>Privacy Policy</Link> </span>.</label>
-                        {errors.check && <span className='text-red-600 text-sm font-medium'>Fill the check box.</span>} 
+                        {errors.check && <span className='text-red-600 text-sm font-medium'>Fill the check box.</span>}
                     </div>
                     <input className='btn btn-block mt-3 bg-[#52b788] text-lg text-white hover:text-black  font-bold' type="submit" value="Sign up" />
                 </form>
