@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
 
 const Navbar = () => {
-    const {user} = useContext(AuthContext);
-    console.log(user);
+    const { user, logOut, setUser, loading } = useContext(AuthContext);
+    console.log(loading);
     const navLinks = <>
         <li> <NavLink to='/'>Home</NavLink> </li>
-        <li> <NavLink to='/register'>Signup</NavLink> </li>
-        <li> <NavLink to='/login'>Login</NavLink> </li>
     </>
+    // logout user
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                setUser(null);
+            })
+    }
     return (
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -29,7 +34,25 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                
+                <div>
+                    {
+                        user &&
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img alt="Tailwind CSS Navbar component" src={user && user?.photoURL || 'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg'} />
+                                </div>
+                            </div>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[10] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a>{user && user?.displayName || "No Name"}</a></li>
+                                <li><button onClick={handleLogOut}>Logout</button ></li>
+                            </ul>
+                        </div>
+                        ||
+                        <Link to="/login"> <button className="btn">login</button></Link>
+                    }
+                </div>
             </div>
         </div>
     );
