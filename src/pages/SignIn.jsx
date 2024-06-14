@@ -39,10 +39,16 @@ const SignIn = () => {
 
     }
 
-    const handleSocialSignIn = (socialSignIn) => {
+    const handleSocialSignIn = (socialSignIn, socialName) => {
         socialSignIn()
             .then(result => {
-                console.log(result);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `Login with ${socialName} successful.`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -82,10 +88,10 @@ const SignIn = () => {
                 <div className="divider text-[#52b788]">Login with</div>
                 <div >
                     <div className='flex gap-4 justify-center mt-4'>
-                        <button onClick={() => { handleSocialSignIn(googleSignIn) }} className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
+                        <button onClick={() => { handleSocialSignIn(googleSignIn, "google") }} className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
                             <FaGoogle></FaGoogle> Google
                         </button>
-                        <button onClick={() => handleSocialSignIn(githubSignIn)} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
+                        <button onClick={() => handleSocialSignIn(githubSignIn , "github")} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
                             <FaGithub></FaGithub> Github
                         </button>
                     </div>

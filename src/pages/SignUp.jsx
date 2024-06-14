@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 
 
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, googleSignIn, githubSignIn } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -59,6 +59,21 @@ const SignUp = () => {
                     timer: 1500
                 });
             })
+    }
+    const handleSocialSignIn = (socialLogin, socialName)=>{
+        socialLogin()
+        .then(result=>{
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `Login with ${socialName} successful.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
     return (
         <div className='grid md:grid-cols-2 md:border md:border-l-0 gap-8 rounded-lg  px-2 lg:px-0  md:max-w-7xl mx-auto items-center'>
@@ -107,10 +122,10 @@ const SignUp = () => {
                 <div className="divider">OR</div>
                 <div >
                     <div className='flex gap-4 justify-center mt-4'>
-                        <button className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
+                        <button onClick={()=> handleSocialSignIn(googleSignIn, "google")} className='btn  bg-[#52b788]  text-xl text-white hover:text-black flex gap-2 items-center'>
                             <FaGoogle></FaGoogle> Google
                         </button>
-                        <button className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
+                        <button onClick={()=> handleSocialSignIn(githubSignIn, "github")} className='btn  bg-[#52b788] text-xl  text-white hover:text-black  flex gap-2 items-center'>
                             <FaGithub></FaGithub> Github
                         </button>
                     </div>
