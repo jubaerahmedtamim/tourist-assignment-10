@@ -1,15 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Lottie from "lottie-react";
 import loginAnimation from "../../public/RegisterAnimation.json";
 import { Link } from 'react-router-dom';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const SignIn = () => {
+    const { loginWithEmail } = useContext(AuthContext);
 
-    const {register, handleSubmit, formState:{ errors }} = useForm()
-    const onSubmit = (data) =>{
-        console.log(data);
+    const { register, handleSubmit, formState: { errors } } = useForm()
+    const onSubmit = (data) => {
+
+        const { email, password } = data;
+
+        loginWithEmail(email, password)
+            .then(result => {
+                if (result) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your login has successful.",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: error.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+
     }
 
     return (
@@ -24,14 +51,14 @@ const SignIn = () => {
                         <div className="label">
                             <span className="label-text font-medium text-[#52b788]">Email address</span>
                         </div>
-                        <input {...register('email', {required: true })} type="email" name='email' placeholder="Email address" className="input input-bordered w-full" />
+                        <input {...register('email', { required: true })} type="email" name='email' placeholder="Email address" className="input input-bordered w-full" />
                         {errors.email && <span className='text-red-600 text-sm font-medium'>This field is required</span>}
                     </label>
                     <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text font-medium text-[#52b788]">Password</span>
                         </div>
-                        <input {...register('password', {required: true})} type="password" name='password' placeholder="Password" className="input input-bordered w-full" />
+                        <input {...register('password', { required: true })} type="password" name='password' placeholder="Password" className="input input-bordered w-full" />
                         {errors.password && <span className='text-red-600 text-sm font-medium'>This field is required</span>}
                     </label>
 

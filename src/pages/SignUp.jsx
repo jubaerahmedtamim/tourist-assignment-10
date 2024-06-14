@@ -20,6 +20,18 @@ const SignUp = () => {
     const onSubmit = (data) => {
         console.log(data);
         const { name, email, password, imageURL } = data;
+
+        // for password validation.
+        if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
+            return (
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Password should contain at least one Uppercase, one lowercase & 6 characters in length.",
+                    showConfirmButton: false,
+                    timer: 1500
+                }))
+        }
         createUser(email, password)
             .then(result => {
                 console.log(result);
