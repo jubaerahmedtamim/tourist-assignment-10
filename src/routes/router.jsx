@@ -7,13 +7,14 @@ import AllTouristSpots from "../Components/AllTouristSpots";
 import AddTouristSpot from "../pages/AddTouristSpot";
 import MyList from "../pages/MyList";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
+import ErrorElement from "../pages/shared/ErrorElement";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Root></Root>,
-        errorElement: <div>Error</div>,
+        errorElement: <ErrorElement></ErrorElement>,
         children: [
             {
                 path: '/',
