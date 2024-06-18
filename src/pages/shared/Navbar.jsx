@@ -6,7 +6,7 @@ import { Tooltip } from 'react-tooltip'
 
 const Navbar = () => {
     const { user, logOut, setUser, loading } = useContext(AuthContext);
-    console.log(loading);
+    
     const navLinks = <>
         <li> <NavLink to='/'>Home</NavLink> </li>
         <li> <NavLink to='/allTouristSpot'>All Tourist Spot</NavLink> </li>
@@ -31,7 +31,7 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost text-2xl font-bold">Green Excursion</Link>
+                <Link to='/' className="btn btn-ghost text-2xl font-bold text-[#52b788]">Green Excursion</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

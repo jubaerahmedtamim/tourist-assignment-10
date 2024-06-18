@@ -3,11 +3,12 @@ import Root from "../layouts/Root";
 import SignUp from "../pages/SignUp";
 import SignIn from "../pages/SignIn";
 import Home from "../pages/Home";
-import AllTouristSpots from "../Components/AllTouristSpots";
 import AddTouristSpot from "../pages/AddTouristSpot";
 import MyList from "../pages/MyList";
 import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import ErrorElement from "../pages/shared/ErrorElement";
+import AllTouristSpots from "../pages/AllTouristSpots";
+import UpdateTouristSpot from "../pages/UpdateTouristSpot";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
             {
                 path:'/allTouristSpot',
                 element: <AllTouristSpots></AllTouristSpots>,
+                loader: ()=> fetch('http://localhost:5000/allTouristSpots'),
             },
             {
                 path: '/addTouristSpot',
@@ -38,7 +40,13 @@ const router = createBrowserRouter([
             },
             {
                 path: '/myList',
-                element: <PrivateRoutes><MyList></MyList></PrivateRoutes>
+                element: <PrivateRoutes><MyList></MyList></PrivateRoutes>,
+                loader: ()=> fetch('http://localhost:5000/allTouristSpots'),
+            },
+            {
+                path: '/spot/:id',
+                element: <PrivateRoutes><UpdateTouristSpot></UpdateTouristSpot></PrivateRoutes>,
+                loader: ({params})=> fetch(`http://localhost:5000/spot/${params.id}`)
             }
         ]
     },
