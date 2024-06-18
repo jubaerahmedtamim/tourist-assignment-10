@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
 import { GrView } from 'react-icons/gr';
 import { MdDeleteOutline } from 'react-icons/md';
-import { Link, useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../providers/AuthProvider';
 
 const MyList = () => {
-    const loadedTouristSpots = useLoaderData();
-    const [touristSpots, setTouristSpots] = useState(loadedTouristSpots);
+    const { user } = useContext(AuthContext)
+    const { email } = user;
+    const [touristSpots, setTouristSpots] = useState(null);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/touristspots/${email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setTouristSpots(data)
+            })
+    }, [])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -32,7 +43,7 @@ const MyList = () => {
                                 text: "Your data has been deleted.",
                                 icon: "success"
                             });
-                            const remainingSpots =  touristSpots.filter(spot => spot._id !== id)
+                            const remainingSpots = touristSpots.filter(spot => spot._id !== id)
                             setTouristSpots(remainingSpots)
                         }
                     })
@@ -57,7 +68,7 @@ const MyList = () => {
                 </thead>
                 <tbody>
                     {
-                        touristSpots.map((spot, index) => <tr className='hover:bg-green-50' key={spot._id}>
+                        touristSpots?.map((spot, index) => <tr className='hover:bg-green-50' key={spot._id}>
                             <th>{index + 1}</th>
                             <td>{spot?.userName}</td>
                             <td>{spot?.spot_name}</td>
