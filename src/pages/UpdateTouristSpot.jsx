@@ -23,7 +23,7 @@ const UpdateTouristSpot = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                if (datamodifiedCount > 0) {
+                if (data.modifiedCount > 0) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",

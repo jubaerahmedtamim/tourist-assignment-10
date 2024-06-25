@@ -9,6 +9,8 @@ import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 import ErrorElement from "../pages/shared/ErrorElement";
 import AllTouristSpots from "../pages/AllTouristSpots";
 import UpdateTouristSpot from "../pages/UpdateTouristSpot";
+import ViewDetails from "../pages/ViewDetails";
+import CountriesSpots from "../pages/CountriesSpots";
 
 
 const router = createBrowserRouter([
@@ -46,6 +48,15 @@ const router = createBrowserRouter([
                 path: '/spot/:id',
                 element: <PrivateRoutes><UpdateTouristSpot></UpdateTouristSpot></PrivateRoutes>,
                 loader: ({params})=> fetch(`http://localhost:5000/spot/${params.id}`)
+            },
+            {
+                path: '/viewDetails/:id',
+                element: <PrivateRoutes><ViewDetails></ViewDetails></PrivateRoutes>,
+                loader: ({params})=> fetch(`http://localhost:5000/spot/${params.id}`)
+            }, 
+            {
+                path: '/country-spots/:country_name',
+                element: <PrivateRoutes> <CountriesSpots></CountriesSpots> </PrivateRoutes>,
             }
         ]
     },

@@ -1,5 +1,5 @@
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import auth from '../firebase/firebase.config';
 
 export const AuthContext = createContext(null);
@@ -7,43 +7,46 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); 
-    const [loading, setLoading]= useState(true);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const createUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     }
 
-    const loginWithEmail = (email, password)=>{
+    const loginWithEmail = (email, password) => {
         setLoading(true)
         return signInWithEmailAndPassword(auth, email, password);
     }
 
-    const googleSignIn = () =>{
+    const googleSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, googleProvider);
     }
-    const githubSignIn = () =>{
+    const githubSignIn = () => {
         setLoading(true);
         return signInWithPopup(auth, githubProvider);
     }
 
-    const logOut = ()=>{
+    const logOut = () => {
         return signOut(auth);
     }
 
-    const unSubscribe = onAuthStateChanged(auth, (user)=>{
-        if(user){
-            setLoading(false);
-            setUser(user);
-        }
-        return () => unSubscribe(); 
-    })
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user);
+                setLoading(false);
+            }
+            return () => unSubscribe();
+        })
 
+    }, [])
     const authInfo = {
         user,
         loading,
+        setLoading,
         setUser,
         createUser,
         loginWithEmail,

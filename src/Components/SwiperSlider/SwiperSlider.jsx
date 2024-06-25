@@ -6,7 +6,7 @@ import slides from '../../../public/slider.json'
 
 const SwiperSlider = () => {
     return (
-        <div>
+        <div className='z-0'>
             <Swiper
 
                 modules={[Autoplay, EffectFade, Navigation, Pagination, Scrollbar, A11y]}

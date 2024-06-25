@@ -80,7 +80,7 @@ const MyList = () => {
                                         <CiEdit />
                                     </button>
                                 </Link>
-                                <Link to={`/spot-details/${spot?._id}`}>
+                                <Link to={`/viewDetails/${spot?._id}`}>
                                     <button className="btn btn-circle btn-outline">
                                         <GrView />
                                     </button>
