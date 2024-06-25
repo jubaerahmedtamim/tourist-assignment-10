@@ -36,7 +36,7 @@ const AddTouristSpot = () => {
     return (
         <div className='w-5/6 mx-auto mb-10'>
             <h1 className=' font-bold text-4xl text-center my-10'>Add Tourist <span className='text-[#52b788]'>Spot</span></h1>
-            <form className='grid grid-cols-1 md:gap-5 md:grid-cols-2' onSubmit={handleSubmit(onSubmit)}>
+            <form className='grid md:grid-cols-2 md:gap-5' onSubmit={handleSubmit(onSubmit)}>
                 <label className="form-control w-full">
                     <div className="label">
                         <span className="label-text font-medium text-[#52b788]">Tourist Spot Name<sup className='text-red-600 font-bold'>*</sup> </span>
